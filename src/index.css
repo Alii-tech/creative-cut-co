@@ -1,0 +1,80 @@
+@import "tailwindcss";
+
+:root {
+  --cream: #F4EFE6;
+  --ink: #0E0D0B;
+  --red: #C8341F;
+  --warm-gray: #7A7268;
+  --warm-gray-light: #B8B3A8;
+  --ink-soft: #2A2926;
+  --serif: 'Georgia', 'Times New Roman', serif;
+  --sans: system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --mono: 'Courier New', 'Courier', monospace;
+}
+
+body {
+  background-color: var(--cream);
+  color: var(--ink);
+  font-family: var(--sans);
+  cursor: none; /* Hides default cursor for our custom one */
+  overflow-x: hidden;
+}
+
+/* FILM GRAIN */
+.grain-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+  mix-blend-mode: multiply;
+  animation: grain-shift 0.12s steps(1) infinite;
+}
+
+@keyframes grain-shift {
+  0%   { transform: translate(0, 0); }
+  20%  { transform: translate(3%, 1%); }
+  40%  { transform: translate(2%, -2%); }
+  60%  { transform: translate(1%, -4%); }
+  80%  { transform: translate(3%, -1%); }
+  100% { transform: translate(2%, 3%); }
+}
+
+/* MARQUEE ANIMATION */
+@keyframes marquee-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+.animate-marquee {
+  animation: marquee-scroll 28s linear infinite;
+}
+
+/* TV SCANLINES */
+.scanlines {
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 3px,
+    rgba(0,0,0,0.18) 3px,
+    rgba(0,0,0,0.18) 4px
+  );
+  mix-blend-mode: multiply;
+}
+/* HIDE SCROLLBARS FOR FILMSTRIP */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+/* FOOTER CREDITS ROLL */
+@keyframes credits-roll {
+  from { transform: translateY(0); }
+  to { transform: translateY(-50%); }
+}
+.animate-credits-roll {
+  animation: credits-roll 20s linear infinite;
+}
