@@ -78,3 +78,19 @@ body {
 .animate-credits-roll {
   animation: credits-roll 20s linear infinite;
 }
+/* Hide Scrollbars */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Smooth Vertical Marquee for Footer */
+@keyframes vertical-scroll {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-50%); }
+}
+.animate-vertical-scroll {
+  animation: vertical-scroll 15s linear infinite;
+}
+.animate-vertical-scroll:hover,
+.animate-vertical-scroll:active {
+  animation-play-state: paused;
+}
