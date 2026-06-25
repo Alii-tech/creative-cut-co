@@ -158,11 +158,11 @@ function App() {
       {/* HERO SECTION */}
       <section id="home" className="min-h-screen flex flex-col items-center justify-center pt-32 pb-16 px-6 relative overflow-hidden">
         <FadeIn>
-          <div className="font-mono text-[0.65rem] tracking-[0.25em] text-[#C8341F] uppercase mb-6 text-center">VOL. 01 — CCC STUDIOS</div>
+          <div className="font-mono text-[0.65rem] tracking-[0.25em] text-[#C8341F] uppercase mb-6 text-center">CCC STUDIOS</div>
           <h1 className="font-serif text-5xl md:text-7xl font-black italic tracking-tighter leading-none text-center mb-4">
             EVERY<br /><em className="text-[#C8341F]">FRAME</em><br />MATTERS
           </h1>
-          <p className="font-sans text-sm md:text-base text-[#7A7268] tracking-wider text-center mb-12">Cinematic Motion & Design — 2026</p>
+          <p className="font-sans text-sm md:text-base text-[#7A7268] tracking-wider text-center mb-12">Cinematic Motion & Design</p>
         </FadeIn>
 
         <FadeIn delay={200}>
@@ -323,14 +323,7 @@ function App() {
           </FadeIn>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
-            <FadeIn delay={200}>
-              <div className="w-full aspect-[3/4] bg-[#2A2926] rounded-lg relative overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-br from-[#1a1410] to-[#0d0b08]"></div>
-                <div className="absolute bottom-6 left-6 z-10">
-                    <div className="font-serif text-3xl font-black italic">Ali ul Hassan</div>
-                    <div className="font-mono text-[0.58rem] text-[#C8341F] tracking-[0.2em] mt-2">RAWALPINDI, PAKISTAN</div>
-                </div>
-              </div>
+            <FadeIn delay={200}>                
             </FadeIn>
 
             <FadeIn delay={400}>
@@ -415,7 +408,7 @@ function App() {
           
           <div className="absolute top-6 left-0 w-full flex justify-center z-20 pointer-events-none">
             <span className="font-mono text-[0.55rem] tracking-[0.15em] text-[#7A7268] border border-[#7A7268]/30 bg-[#0a0a0a]/80 backdrop-blur-sm rounded-full px-4 py-1.5 inline-block">
-               OR CLICK ANY DIRECT LINK BELOW TO CHAT
+              SCROLL ↑ OR CLICK ANY TO CHAT
              </span>
           </div>
 
@@ -484,8 +477,8 @@ function App() {
           <div className="font-serif text-base font-black italic text-[#F4EFE6]">
             CCC <span className="text-[#C8341F]">CREATIVE CUT CO.</span>
           </div>
-          <div className="font-mono text-[0.55rem] text-[#7A7268] tracking-[0.35em]">
-            2026 — ALL RIGHTS RESERVED
+          <div className="font-serif text-base font-black italic text-[#F4EFE6]-[0.25rem] text-[#7A7268] tracking-[0.05em]">
+            ✉ creativecutco.studio@gmail.com
           </div>
         </div>
       </footer>
