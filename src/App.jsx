@@ -30,6 +30,34 @@ const FadeIn = ({ children, delay = 0 }) => {
 };
 
 function App() {
+  const [isPlaying, setIsPlaying] = useState(true);
+  const videoRef = useRef(null);
+  const videoSource = "/Videos/VOX FINAL.mp4";
+  
+  const handlePlay = () => {
+    // Request PWA Notification Permission on User Interaction
+    if ('Notification' in window && Notification.permission === 'default') {
+      Notification.requestPermission();
+    }
+
+    if (videoRef.current) {
+      if (isPlaying) {
+        videoRef.current.pause();
+      } else {
+        videoRef.current.play();
+      }
+      setIsPlaying(!isPlaying);
+    }
+  };
+  
+  const handleRewind = () => {
+    if (videoRef.current) videoRef.current.currentTime -= 5;
+  };
+
+  const handleFFWD = () => {
+    if (videoRef.current) videoRef.current.currentTime += 5;
+  };
+  
   const [filmIdx, setFilmIdx] = useState(0);
   const [colorMode, setColorMode] = useState(false); 
   const [localReveal, setLocalReveal] = useState({}); 
@@ -54,13 +82,15 @@ function App() {
   ];
 
   const thumbnails = [
-    { id: 't1', title: 'Cover / Issue 14', cat: 'EDITORIAL', span: 'col-span-12 md:col-span-7', aspect: 'aspect-square md:aspect-video', swatch: 'from-[#c8341f] via-[#e8761a] to-[#1a3c5e]' },
-    { id: 't2', title: 'Short / Vertical', cat: 'DOCUMENTARY', span: 'col-span-12 md:col-span-5', aspect: 'aspect-[4/5]', swatch: 'from-[#1a3a2e] to-[#f4efe6]' },
-    { id: 't3', title: 'YouTube / Long-form', cat: 'SERIES', span: 'col-span-12 md:col-span-4', aspect: 'aspect-video', swatch: 'from-[#1e1a3a] to-[#e8c062]' },
-    { id: 't4', title: 'Series / Episode 03', cat: 'MINI SERIES', span: 'col-span-12 md:col-span-4', aspect: 'aspect-video', swatch: 'from-[#0e1e2e] to-[#c8e8f8]' },
-    { id: 't5', title: 'Brand / Campaign', cat: 'COMMERCIAL', span: 'col-span-12 md:col-span-4', aspect: 'aspect-video', swatch: 'from-[#2e1a0a] to-[#f4c070]' },
-    { id: 't6', title: 'Podcast / Visual ID', cat: 'IDENTITY', span: 'col-span-12 md:col-span-6', aspect: 'aspect-[4/3]', swatch: 'from-[#0a1a0a] to-[#6cd46c]' },
-    { id: 't7', title: 'Social / Reel Cover', cat: 'SOCIAL', span: 'col-span-12 md:col-span-6', aspect: 'aspect-[4/3]', swatch: 'from-[#1a0e1e] to-[#f8a8d0]' },
+    { id: '1', title: 'Work 01', cat: 'DESIGN', span: 'col-span-12 md:col-span-4', aspect: 'aspect-video', img: '/Thumbnails/1.png' },
+    { id: '3', title: 'Work 02', cat: 'MOTION', span: 'col-span-12 md:col-span-4', aspect: 'aspect-video', img: '/Thumbnails/3.png' },
+    { id: '4', title: 'Work 03', cat: 'BRAND', span: 'col-span-12 md:col-span-4', aspect: 'aspect-video', img: '/Thumbnails/4.png' },
+    { id: '5', title: 'Work 04', cat: 'DESIGN', span: 'col-span-12 md:col-span-4', aspect: 'aspect-video', img: '/Thumbnails/5.png' },
+    { id: '8', title: 'Work 07', cat: 'MOTION', span: 'col-span-12 md:col-span-4', aspect: 'aspect-video', img: '/Thumbnails/8.png' },
+    { id: '9', title: 'Work 08', cat: 'BRAND', span: 'col-span-12 md:col-span-4', aspect: 'aspect-video', img: '/Thumbnails/9.png' },
+    { id: '10', title: 'Work 09', cat: 'DESIGN', span: 'col-span-12 md:col-span-4', aspect: 'aspect-video', img: '/Thumbnails/10.png' },
+    { id: '11', title: 'Work 10', cat: 'VIDEO', span: 'col-span-12 md:col-span-4', aspect: 'aspect-video', img: '/Thumbnails/11.png' },
+    { id: '12', title: 'Work 11', cat: 'EDITORIAL', span: 'col-span-12 md:col-span-4', aspect: 'aspect-video', img: '/Thumbnails/6.png' },
   ];
 
   const handleThumbClick = (id) => {
@@ -107,7 +137,6 @@ function App() {
 
     const notificationBody = `Name: ${name}\nEmail: ${email}\n\nProject Details:\n${message}`;
 
-    // IMPORTANT: Change this to your secret topic string!
     const ntfyTopic = "ccc-portfolio-quotes-x9f2a"; 
     
     try {
@@ -149,9 +178,9 @@ function App() {
           <li><a href="#home" className="hover:text-[#0E0D0B] transition-colors">Home</a></li>
           <li><a href="#films" className="hover:text-[#0E0D0B] transition-colors">Projects</a></li>
           <li><a href="#thumbnails" className="hover:text-[#0E0D0B] transition-colors">Gallery</a></li>
+          <li><a href="#contact" className="hover:text-[#C8341F] transition-colors font-bold text-[#0E0D0B]">Contact Me</a></li>
           <li><a href="#skills" className="hover:text-[#0E0D0B] transition-colors">Skills</a></li>
           <li><a href="#director" className="hover:text-[#0E0D0B] transition-colors">About Me</a></li>
-          <li><a href="#contact" className="hover:text-[#C8341F] transition-colors font-bold text-[#0E0D0B]">Contact Me</a></li>
         </ul>
       </nav>
 
@@ -168,21 +197,33 @@ function App() {
         <FadeIn delay={200}>
           <div className="w-full max-w-3xl mx-auto">
             <div className="bg-[#0E0D0B] rounded-2xl p-4 md:p-7 shadow-[0_20px_80px_rgba(14,13,11,0.35)] relative">
+              
               <div className="relative aspect-video bg-[#050504] rounded-md overflow-hidden flex flex-col items-center justify-center">
-                <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,#1a1410_0%,#050504_70%)]"></div>
+                <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,#1a1410_0%,#050504_70%)] z-0"></div>
                 <div className="absolute inset-0 scanlines z-10 pointer-events-none"></div>
-                <div className="relative z-30 text-center flex flex-col items-center">
-                  <h2 className="font-serif text-4xl md:text-6xl font-black italic text-[#F4EFE6] leading-none drop-shadow-2xl">
-                    {tvTitles[filmIdx].title}<br />
-                    <span className="text-[#C8341F]">{tvTitles[filmIdx].sub}</span>
-                  </h2>
-                </div>
+                
+                {/* VIDEO PLAYER INTEGRATION */}
+                {/* VIDEO PLAYER INTEGRATION */}
+                <video
+                  ref={videoRef}
+                  src="/Videos/VOX_FINAL.mp4"
+                  className="relative z-20 w-full h-full object-cover"
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  onEnded={() => setIsPlaying(false)}
+                />
               </div>
+
               <div className="flex justify-center gap-4 md:gap-8 pt-6 pb-2 relative z-40">
-                <button onClick={() => setFilmIdx((prev) => (prev - 1 + tvTitles.length) % tvTitles.length)} className="font-mono text-[0.65rem] tracking-[0.12em] text-[#7A7268] border border-[#7A7268]/30 px-4 py-2 rounded hover:bg-[#2A2926] transition-all cursor-pointer">REWIND</button>
-                <button className="font-mono text-[0.65rem] tracking-[0.12em] text-[#C8341F] border border-[#C8341F] px-4 py-2 rounded cursor-pointer">PLAY</button>
-                <button onClick={() => setFilmIdx((prev) => (prev + 1) % tvTitles.length)} className="font-mono text-[0.65rem] tracking-[0.12em] text-[#7A7268] border border-[#7A7268]/30 px-4 py-2 rounded hover:bg-[#2A2926] transition-all cursor-pointer">FFWD</button>
+                <button onClick={handleRewind} className="font-mono text-[0.65rem] tracking-[0.12em] text-[#7A7268] border border-[#7A7268]/30 px-4 py-2 rounded hover:bg-[#2A2926] transition-all cursor-pointer">REWIND</button>
+                <button onClick={handlePlay} className="font-mono text-[0.65rem] tracking-[0.12em] text-[#C8341F] border border-[#C8341F] px-4 py-2 rounded cursor-pointer">
+                  {isPlaying ? "PAUSE" : "PLAY"}
+                </button>
+                <button onClick={handleFFWD} className="font-mono text-[0.65rem] tracking-[0.12em] text-[#7A7268] border border-[#7A7268]/30 px-4 py-2 rounded hover:bg-[#2A2926] transition-all cursor-pointer">FWD</button>
               </div>
+
             </div>
           </div>
         </FadeIn>
@@ -221,7 +262,7 @@ function App() {
             <div className="flex flex-wrap items-end justify-between border-b border-[#0E0D0B]/10 pb-4 gap-4 mb-8">
               <div>
                 <div className="font-mono text-[0.6rem] text-[#C8341F] tracking-[0.2em] mb-2">02 / THUMBNAILS</div>
-                <h2 className="font-serif text-3xl md:text-5xl font-black text-[#0E0D0B] leading-none">The<br /><em className="italic">Gallery</em></h2>
+                <h2 className="font-serif text-3xl md:text-5xl font-black text-[#0E0D0B] leading-none">The<br /><em className="italic">Thumbnails Gallery</em></h2>
               </div>
               <div className="flex items-center gap-3">
                 <span className="font-mono text-[0.6rem] tracking-[0.15em] text-[#7A7268] pr-2">
@@ -242,26 +283,30 @@ function App() {
 
           <FadeIn delay={200}>
             <div className="grid grid-cols-12 gap-3 md:gap-5">
-               {thumbnails.map((thumb) => {
-                 const isRevealed = colorMode || localReveal[thumb.id];
-                 return (
-                  <div 
-                    key={thumb.id} 
-                    onClick={() => handleThumbClick(thumb.id)}
-                    className={`${thumb.span} relative rounded-lg bg-[#2A2926] ${thumb.aspect} overflow-hidden cursor-pointer group`}
-                  >
-                     <div className={`w-full h-full bg-gradient-to-br ${thumb.swatch} transition-all duration-500 ease-out ${isRevealed ? 'grayscale-0 contrast-100 brightness-100' : 'grayscale contrast-125 brightness-90 group-hover:grayscale-[50%]'}`}></div>
-                     
-                     <div className={`absolute inset-0 bg-gradient-to-br from-[#0E0D0B]/60 to-[#F4EFE6]/5 mix-blend-color transition-opacity duration-500 ${isRevealed ? 'opacity-0' : 'opacity-100'}`}></div>
-                     
-                     <div className="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-[#0E0D0B]/90 to-transparent flex items-end justify-between z-10">
-                       <span className="font-mono text-[0.6rem] text-[#F4EFE6] tracking-[0.16em] uppercase">{thumb.title}</span>
-                       <span className="font-mono text-[0.5rem] text-[#C8341F] tracking-[0.18em]">{thumb.cat}</span>
-                     </div>
-                  </div>
-                 );
-               })}
-            </div>
+  {thumbnails.map((thumb) => {
+    const isRevealed = colorMode || localReveal[thumb.id];
+    return (
+      <div 
+        key={thumb.id} 
+        onClick={() => handleThumbClick(thumb.id)}
+        className={`${thumb.span} relative rounded-lg bg-[#2A2926] ${thumb.aspect} overflow-hidden cursor-pointer group`}
+      >
+        <img 
+          src={thumb.img} 
+          alt={thumb.title} 
+          className={`w-full h-full object-cover transition-all duration-500 ease-out ${isRevealed ? 'grayscale-0 contrast-100' : 'grayscale group-hover:grayscale-50'}`}
+        />
+        
+        <div className={`absolute inset-0 bg-[#0E0D0B]/40 transition-opacity duration-500 ${isRevealed ? 'opacity-0' : 'opacity-100'}`}></div>
+        
+        <div className="absolute bottom-0 left-0 w-full p-4 bg-gradient-to-t from-[#0E0D0B]/90 to-transparent flex items-end justify-between z-10">
+          <span className="font-mono text-[0.6rem] text-[#F4EFE6] tracking-[0.16em] uppercase">{thumb.title}</span>
+          <span className="font-mono text-[0.5rem] text-[#C8341F] tracking-[0.18em]">{thumb.cat}</span>
+        </div>
+      </div>
+    );
+  })}
+</div>
           </FadeIn>
         </div>
       </section>
@@ -332,7 +377,7 @@ function App() {
                   "At Creative Cut Co., we believe every frame is a decision."
                 </blockquote>
                 <p className="text-base text-[#F4EFE6]/80 leading-relaxed">
-                  I bridge the gap between cinematic motion and structural design. As a computer science student based in Rawalpindi, my technical background allows me to push creative boundaries across video editing, brand identity, and web development.
+                  I bridge the gap between cinematic motion and structural design. As a computer science student, my technical background allows me to push creative boundaries across video editing, brand identity, and web development.
                 </p>
                 <p className="text-base text-[#F4EFE6]/80 leading-relaxed">
                   Whether crafting high-octane automotive edits, elegant fashion commercials, or full digital ecosystems, my goal is always visual precision.
