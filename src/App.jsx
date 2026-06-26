@@ -30,26 +30,21 @@ const FadeIn = ({ children, delay = 0 }) => {
 };
 
 function App() {
-  const [isPlaying, setIsPlaying] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(false);
   const videoRef = useRef(null);
   const videoSource = "/Videos/VOX FINAL.mp4";
   
-  const handlePlay = () => {
-    // Request PWA Notification Permission on User Interaction
-    if ('Notification' in window && Notification.permission === 'default') {
-      Notification.requestPermission();
+ const handlePlay = () => {
+  if (videoRef.current) {
+    if (isPlaying) {
+      videoRef.current.pause();
+    } else {
+      videoRef.current.muted = false; // Unmute when they manually click play
+      videoRef.current.play();
     }
-
-    if (videoRef.current) {
-      if (isPlaying) {
-        videoRef.current.pause();
-      } else {
-        videoRef.current.play();
-      }
-      setIsPlaying(!isPlaying);
-    }
-  };
-  
+    setIsPlaying(!isPlaying);
+  }
+};
   const handleRewind = () => {
     if (videoRef.current) videoRef.current.currentTime -= 5;
   };
@@ -210,7 +205,7 @@ function App() {
                   className="relative z-20 w-full h-full object-cover"
                   autoPlay
                   loop
-                  muted
+                  
                   playsInline
                   onEnded={() => setIsPlaying(false)}
                 />
@@ -374,7 +369,7 @@ function App() {
             <FadeIn delay={400}>
               <div className="flex flex-col gap-6">
                 <blockquote className="font-serif text-xl md:text-3xl font-bold italic border-l-4 border-[#C8341F] pl-6">
-                  "At Creative Cut Co., we believe every frame is a decision."
+                  "At Creative Cut Co., I believe every frame is a decision."
                 </blockquote>
                 <p className="text-base text-[#F4EFE6]/80 leading-relaxed">
                   I bridge the gap between cinematic motion and structural design. As a computer science student, my technical background allows me to push creative boundaries across video editing, brand identity, and web development.
